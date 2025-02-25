@@ -212,10 +212,19 @@
         function checkEnd() {
             if (scenarioIndexes.every(index => index >= playerScenarios[0].length)) {
                 let maxScore = Math.max(...playerScores);
-                let winningTeam = playerScores.indexOf(maxScore);
+                let winningTeams = [];
+                playerScores.forEach((score, index) => {
+                    if (score === maxScore) {
+                        winningTeams.push(index);
+                    }
+                });
+
                 let teamNames = ["#team_peacekeepers ✌️", "#team_avengers 🦸", "#team_protectors 🛡️", "#team_diplomats 🕊️"];
-                document.getElementById("flash").innerHTML = `🎉🎉 Congrats ${teamNames[winningTeam]}! You are now the Chief Mediators of the school! 🎉🎉`;
-                
+                let winningTeamNames = winningTeams.map(teamIndex => teamNames[teamIndex]).join(" and ");
+
+                let message = `🎉🎉 Congrats ${winningTeamNames}! You are now the Chief Mediators of the school! 🎉🎉`;
+                document.getElementById("flash").innerHTML = message;
+
                 // Play winner sound
                 let winnerSound = document.getElementById("winnerSound");
                 winnerSound.play();
